@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>股市详情</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css"
+    />
+    <link rel="stylesheet" href="../css/main-table.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+  </head>
+  <body>
+    <nav class="top-navigator">
+      <link rel="stylesheet" href="../css/navigator.css" />
+      <ul>
+        <li id="index" style="display: block">
+          <a href="../html/index.html">主页</a>
+        </li>
+        <li id="loggout" style="display: none">
+          <a href="../html/logout.html">退出登录</a>
+        </li>
+        <li id="loggin" style="display: none">
+          <a href="../html/login.html">登录/注册</a>
+        </li>
+        <li id="trade" style="display: block">
+          <a href="../html/trade.html">交易</a>
+        </li>
+        <li id="user-info" style="display: none">
+          <a href="../html/user-info.html">我的</a>
+        </li>
+      </ul>
+    </nav>
+
+    <h1>大盘行情</h1>
+
+    <div id="loading" style="display: block">正在加载中，请稍候...</div>
+
+    <div id="main-table">
+      <table id="SSE"></table>
+      <div style="height: 10px"></div>
+      <table id="SZSE"></table>
+      <div style="height: 10px"></div>
+      <table id="GEM"></table>
+    </div>
+
+    <script src="../js/main.js"></script>
+  </body>
+</html>

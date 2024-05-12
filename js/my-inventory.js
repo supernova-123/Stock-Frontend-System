@@ -1,0 +1,81 @@
+// 根据查询参数得到用户名
+const queryUrl = window.location.href;
+const queryString = queryUrl.substring(queryUrl.indexOf("?") + 1);
+const params = {};
+
+queryString.split("&").forEach((param) => {
+  const [key, value] = param.split("=");
+  params[key] = decodeURIComponent(value);
+});
+
+var username = params.username;
+if (sessionStorage.getItem("username") != username) {
+  alert("无法查看该用户的持仓");
+  window.location.href = document.referrer; // 返回先前的页面
+}
+
+var inventory_url =
+  "http://127.0.0.1:12345/getInventory?username=" +
+  encodeURIComponent(username);
+var inventory;
+
+fetch(inventory_url)
+  .then((response) => response.json())
+  .then((data) => {
+    inventory = data;
+    initInventoryDatatable(data); // 初始化持仓表格
+    updateInventoryDatatable(data);
+    setInterval(() => updateInventoryDatatable(data), 5000);
+  })
+  .catch((error) => {
+    console.error("获取持仓时发生错误：", error);
+  });
+
+function initInventoryDatatable(data){
+  data.forEach(element => {
+    element["Name"] = stockDict[element["Code"]]
+    element["Total_Cost"] = element["Total_Cost"].toFixed(2);
+    element["AVG_Cost"] = element["AVG_Cost"].toFixed(2);    
+    element["Price"] = "-";
+    element["Profit_Loss"] = "-";
+  });
+  $(document).ready(function() {
+    $("#inventory-table").DataTable({
+      data: data,
+      columns: [
+        { title: '股票代码', data: 'Code' },
+        { title: '股票名称', data: 'Name' },
+        { title: '持仓数量', data: 'Amount' },
+        { title: '总成本', data: 'Total_Cost' },
+        { title: '持仓平均成本', data: 'AVG_Cost' },
+        { title: '实时价格', data: 'Price' },
+        { title: '盈亏', data: 'Profit_Loss' }
+      ]
+    })
+  })
+}
+
+// 定时获取最新价格
+function updateInventoryDatatable(inventoryData){
+  // 通过获取大盘价格来得到每支股票的最新价格
+  const url = "http://127.0.0.1:12345/getMarketPrice";
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      var table = $(`#inventory-table`).DataTable();
+      // 更新datatable
+      for(var i = 0;i < inventoryData.length;i++){
+        for(var j = 0;j < data.length;j++){
+          if(inventoryData[i].Code === data[j].Code){
+            console.log(inventoryData[i].Code);
+            table.cell(i, 5).data(data[j].Price).draw();
+            table.cell(i, 6).data((data[j].Price-inventoryData[i].AVG_Cost).toFixed(2)).draw();
+          }
+        }
+      }
+    })
+    .catch(error => {
+      console.error("获取实时价格时发生了错误");
+    })
+}

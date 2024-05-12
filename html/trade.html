@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <script src="../js/utils/check-loggin.js"></script>
+    <script src="../js/utils/stock-market.js"></script>
+  </head>
+  <body>
+    <h1>股票交易</h1>
+    <form id="tradeForm">
+      <label for="code">股票代码</label>
+      <input type="text" id="code" placeholder="输入股票代码" required />
+      <div id="name-output"></div>
+      <label for="transaction">选择买入或卖出：</label>
+      <select id="transaction">
+        <option value="buy">买入</option>
+        <option value="sell">卖出</option>
+      </select>
+      <input type="text" id="price" placeholder="挂单价格" required />
+      <input type="text" id="amount" placeholder="挂单数量" required />
+      <button type="submit">提交</button>
+      <script src="../js/trade.js"></script>
+    </form>
+  </body>
+</html>
