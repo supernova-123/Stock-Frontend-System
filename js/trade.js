@@ -15,18 +15,30 @@ queryString.split("&").forEach((param) => {
 if (typeof params.code == "undefined") {
   document.title = "交易";
 } else {
-  // TODO: 根据code找到对应的name，写到html中
   document.title = "交易 - " + params.name; // 修改标题
   document.getElementById("code").value = params.code;
-  // document.getElementById("code").disabled = true;
-  // 查询code对应的股票
 }
 
 codeInput = document.getElementById("code");
 nameOutput = document.getElementById("name-output");
-nameOutput.textContent = typeof stockDict[codeInput.value] != "undefined" ? "搜索到股票名称：" + stockDict[codeInput.value] : "";
-codeInput.addEventListener("input", function(event){
-  nameOutput.textContent = typeof stockDict[codeInput.value] != "undefined" ? "搜索到股票名称：" + stockDict[codeInput.value] : "";
+if (stockDict[codeInput.value] != "undefined") {
+  nameOutput.textContent = "搜索到股票名称：" + stockDict[codeInput.value];
+  getStockPrice();
+  setInterval(getStockPrice, 5000);
+}
+else {
+  nameOutput.textContent = "";
+}
+codeInput.addEventListener("input", function (event) {
+  if (typeof stockDict[codeInput.value] != "undefined") {
+    nameOutput.textContent = "搜索到股票名称：" + stockDict[codeInput.value];
+    // 请求实时的股票数据
+    getStockPrice();
+    setInterval(getStockPrice, 5000);
+  }
+  else {
+    nameOutput.textContent = "";
+  }
 });
 
 document
@@ -58,7 +70,7 @@ document
         // 处理返回的结果
         console.log(data);
         // 错误 = 0, 委托成功 = 1, 交易成功 = 2, 废单 = 3, 账户余额不足 = 4, 持仓数量不足 = 5
-        switch(data){
+        switch (data) {
           case 0:
             alert("交易出现了错误，请检查用户或股票是否存在");
             break;
@@ -85,3 +97,15 @@ document
         alert("交易期间出现了错误。");
       });
   });
+
+function getStockPrice() {
+  const url = "http://127.0.0.1:12345/getStockPrice?code=" + encodeURIComponent(codeInput.value);
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById("stock-price").textContent = "当前股票价格: " + data[data.length - 1];
+    })
+    .catch(error => {
+      console.error("获取股票价格时错误", error);
+    })
+}

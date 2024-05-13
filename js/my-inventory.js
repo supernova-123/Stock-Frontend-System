@@ -1,3 +1,21 @@
+// 加载导航栏
+window.addEventListener("load", function () {
+  let nav = document.getElementsByClassName("top-navigator")[0];
+
+  var loggout = nav.querySelector("li#loggout");
+  var loggIn = nav.querySelector("li#loggin");
+  var user_info = nav.querySelector("li#user-info");
+
+  // 判断用户属于哪种状态：未登录、已登录
+  var hasLoggIn = sessionStorage.getItem("loggedIn");
+  if (hasLoggIn !== "true") {
+    loggIn.style.display = "block";
+  } else {
+    loggout.style.display = "block";
+    user_info.style.display = "block";
+  }
+});
+
 // 根据查询参数得到用户名
 const queryUrl = window.location.href;
 const queryString = queryUrl.substring(queryUrl.indexOf("?") + 1);
@@ -19,12 +37,22 @@ var inventory_url =
   encodeURIComponent(username);
 var inventory;
 
+var countDown = 5;
+document.getElementById("count-down").textContent = "数据刷新倒计时: " + countDown + " 秒";;
+countDown--;
 fetch(inventory_url)
   .then((response) => response.json())
   .then((data) => {
     inventory = data;
     initInventoryDatatable(data); // 初始化持仓表格
-    updateInventoryDatatable(data);
+    updateInventoryDatatable(data); // 后续更新持仓
+    setInterval(() => {
+      document.getElementById("count-down").textContent = "数据刷新倒计时: " + countDown + " 秒";;
+      countDown--;
+      if(countDown === 0){
+        countDown = 5;
+      }
+    }, 1000);
     setInterval(() => updateInventoryDatatable(data), 5000);
   })
   .catch((error) => {
@@ -62,13 +90,11 @@ function updateInventoryDatatable(inventoryData){
   fetch(url)
     .then(response => response.json())
     .then(data => {
-      console.log(data);
       var table = $(`#inventory-table`).DataTable();
       // 更新datatable
       for(var i = 0;i < inventoryData.length;i++){
         for(var j = 0;j < data.length;j++){
           if(inventoryData[i].Code === data[j].Code){
-            console.log(inventoryData[i].Code);
             table.cell(i, 5).data(data[j].Price).draw();
             table.cell(i, 6).data((data[j].Price-inventoryData[i].AVG_Cost).toFixed(2)).draw();
           }

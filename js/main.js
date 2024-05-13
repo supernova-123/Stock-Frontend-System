@@ -24,13 +24,23 @@ let hasInit = {
   "SZSE": false,
   "GEM": false,
 }; // 是否已经初始化了
+var countDown = 6;
 function getMarketPrice() {
+  countDown--;
+  if(countDown === 0){
+    countDown = 5;
+  }
+  document.getElementById("count-down").textContent = "数据刷新倒计时: " + countDown + " 秒";
+  if(countDown !== 5){
+    return;
+  }
   let xmlhttp = new XMLHttpRequest();
   const url = "http://127.0.0.1:12345/getMarketPrice";
 
   xmlhttp.onreadystatechange = function () {
     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
       renderTable(xmlhttp);
+      // countDown = 5;
     }
   };
 
@@ -57,7 +67,7 @@ function renderSubTable(type, code) {
   for (var i = 0; i < data.length; i++) {
     if (data[i].Code[0] !== code) continue;
     subData.push(data[i]);
-    subData[subData.length - 1]["Daily_Percentage_Change"] = oldData.hasOwnProperty(i) ? (((data[i].Price - oldData[i].Price) / oldData[i].Price)*100).toFixed(2) + "%" : "-";
+    subData[subData.length - 1]["Daily_Percentage_Change"] = oldData.hasOwnProperty(i) ? (((data[i].Price - oldData[i].Price) / oldData[i].Price) * 100).toFixed(2) + "%" : "-";
     subData[subData.length - 1]["Daily_Price_Change"] = oldData.hasOwnProperty(i) ? (data[i].Price - oldData[i].Price).toFixed(2) : "-";
     subData[subData.length - 1]["Stock_Url"] = "../html/single-stock.html?code=" + encodeURIComponent(data[i].Code) + "&name=" + encodeURIComponent(data[i].Name);
     subData[subData.length - 1]["Trade_Url"] = "../html/trade.html?code=" + encodeURIComponent(data[i].Code) + "&name=" + encodeURIComponent(data[i].Name);
@@ -65,7 +75,7 @@ function renderSubTable(type, code) {
   setMarketDatatable(subData, type);
 }
 
-// 绘制初始表格
+// 绘制初始表格与倒计时
 function setMarketDatatable(data, tableId) {
   if (!hasInit[tableId]) {
     // 如果没有初始化，则进行图标初始化
@@ -78,12 +88,16 @@ function setMarketDatatable(data, tableId) {
           { title: "当前价格", data: "Price" },
           { title: "当日涨跌幅", data: "Daily_Percentage_Change" },
           { title: "当日涨跌价", data: "Daily_Price_Change" },
-          { title: "个股走势", data: "Stock_Url", render: function(data, type, row, meta){
-            return "<a href='" + data + "'>" + "<img src='../images/stock.svg' alt='SVG Image' width='30'>" + "</a>";
-          }},
-          { title: "交易", data: "Trade_Url", render: function(data, type, row, meta){
-            return "<a href='" + data + "'>" + "<img src='../images/trade.svg' alt='SVG Image' width='30'>" + "</a>";
-          }}
+          {
+            title: "个股走势", data: "Stock_Url", render: function (data, type, row, meta) {
+              return "<a href='" + data + "'>" + "<img src='../images/stock.svg' alt='SVG Image' width='30'>" + "</a>";
+            }
+          },
+          {
+            title: "交易", data: "Trade_Url", render: function (data, type, row, meta) {
+              return "<a href='" + data + "'>" + "<img src='../images/trade.svg' alt='SVG Image' width='30'>" + "</a>";
+            }
+          }
         ],
       });
       hasInit[tableId] = true;
@@ -110,4 +124,5 @@ function setMarketDatatable(data, tableId) {
 // 初始先展示当前股市
 getMarketPrice();
 // 每 5s 刷新一次股市
-setInterval(getMarketPrice, 5000);
+setInterval(getMarketPrice, 1000);
+// 倒计时，每1秒-1，到0重来
