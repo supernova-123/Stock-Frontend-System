@@ -21,7 +21,7 @@ if (typeof params.code == "undefined") {
 
 codeInput = document.getElementById("code");
 nameOutput = document.getElementById("name-output");
-if (stockDict[codeInput.value] != "undefined") {
+if (typeof params.code != "undefined") {
   nameOutput.textContent = "搜索到股票名称：" + stockDict[codeInput.value];
   getStockPrice();
   setInterval(getStockPrice, 5000);
