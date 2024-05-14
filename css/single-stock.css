@@ -1,0 +1,56 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* 曲线图容器样式 */
+#chart-container {
+  margin: 20px auto;
+  max-width: 95%;
+}
+
+.highcharts-background {
+  /* width: 0px; */
+  display: none;
+}
+
+/* Highcharts 样式 */
+/* .highcharts-container {
+  width: 100% !important;
+  height: auto !important;
+} */
+
+/* 添加交互效果 */
+/* .highcharts-tooltip-box {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+} */
+
+/* .highcharts-tooltip-header {
+  font-weight: bold;
+  margin-bottom: 5px;
+} */
+
+/* .highcharts-tooltip-point {
+  margin-bottom: 5px;
+} */
+
+/* .highcharts-tooltip-point-key {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 5px;
+} */
+
+/* .highcharts-tooltip-point-value {
+  display: inline-block;
+} */

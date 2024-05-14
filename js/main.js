@@ -62,6 +62,7 @@ function setMarketDatatable(data, tableId) {
   if (!hasInit[tableId]) {
     // 如果没有初始化，则进行图标初始化
     var table = $(`#${tableId}`).DataTable({
+      lengthChange: false,
       language: {
         "sProcessing": "处理中...",
         "sLengthMenu": "显示 _MENU_ 项结果",

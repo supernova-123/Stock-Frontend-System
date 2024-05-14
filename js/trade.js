@@ -38,6 +38,7 @@ codeInput.addEventListener("input", function (event) {
   }
   else {
     nameOutput.textContent = "";
+    document.getElementById("stock-price").textContent = "";
   }
 });
 

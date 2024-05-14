@@ -78,6 +78,25 @@ function addTimeHistory() {
 let chart;
 function drawStockCurve() {
   chart = Highcharts.stockChart("chart-container", {
+    responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 800 // 在页面宽度小于等于800px时应用规则
+          },
+          chartOptions: {
+            legend: {
+              enabled: false // 在小屏幕上隐藏图例
+            },
+            yAxis: {
+              labels: {
+                enabled: false // 在小屏幕上隐藏y轴标签
+              }
+            }
+          }
+        }
+      ]
+    },
     rangeSelector: {
       enabled: false,
     },
