@@ -61,29 +61,54 @@ function renderSubTable(type, code) {
 function setMarketDatatable(data, tableId) {
   if (!hasInit[tableId]) {
     // 如果没有初始化，则进行图标初始化
-    $(document).ready(function () {
-      $(`#${tableId}`).DataTable({
-        data: data,
-        columns: [
-          { title: "股票代码", data: "Code" },
-          { title: "股票名称", data: "Name" },
-          { title: "当前价格", data: "Price" },
-          { title: "当日涨跌幅", data: "Daily_Percentage_Change" },
-          { title: "当日涨跌价", data: "Daily_Price_Change" },
-          {
-            title: "个股走势", data: "Stock_Url", render: function (data, type, row, meta) {
-              return "<a href='" + data + "'>" + "<img src='../images/stock.svg' alt='SVG Image' width='30'>" + "</a>";
-            }
-          },
-          {
-            title: "交易", data: "Trade_Url", render: function (data, type, row, meta) {
-              return "<a href='" + data + "'>" + "<img src='../images/trade.svg' alt='SVG Image' width='30'>" + "</a>";
-            }
+    var table = $(`#${tableId}`).DataTable({
+      language: {
+        "sProcessing": "处理中...",
+        "sLengthMenu": "显示 _MENU_ 项结果",
+        "sZeroRecords": "没有匹配结果",
+        "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+        "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+        "sInfoPostFix": "",
+        "sSearch": "搜索:",
+        "sUrl": "",
+        "sEmptyTable": "表中数据为空",
+        "sLoadingRecords": "载入中...",
+        "sInfoThousands": ",",
+        "oPaginate": {
+          "sFirst": "首页",
+          "sPrevious": "上页",
+          "sNext": "下页",
+          "sLast": "末页"
+        },
+        "oAria": {
+          "sSortAscending": ": 以升序排列此列",
+          "sSortDescending": ": 以降序排列此列"
+        }
+      },
+      data: data,
+      columns: [
+        { title: "股票代码", data: "Code" },
+        { title: "股票名称", data: "Name" },
+        { title: "当前价格", data: "Price" },
+        { title: "当日涨跌幅", data: "Daily_Percentage_Change" },
+        { title: "当日涨跌价", data: "Daily_Price_Change" },
+        {
+          title: "个股走势", data: "Stock_Url", render: function (data, type, row, meta) {
+            return "<a href='" + data + "'>" + "<img src='../images/stock.svg' alt='SVG Image' width='30'>" + "</a>";
           }
-        ],
-      });
-      hasInit[tableId] = true;
+        },
+        {
+          title: "交易", data: "Trade_Url", render: function (data, type, row, meta) {
+            return "<a href='" + data + "'>" + "<img src='../images/trade.svg' alt='SVG Image' width='30'>" + "</a>";
+          }
+        }
+      ],
     });
+    if (tableId !== "SSE") {
+      $(`#${tableId + "-div"}`).removeClass("active");
+    }
+    hasInit[tableId] = true;
   } else {
     var table = $(`#${tableId}`).DataTable();
     // 更新时仅修改价格、涨跌幅、涨跌价
@@ -107,3 +132,14 @@ function setMarketDatatable(data, tableId) {
 getMarketPrice();
 // 每 5s 刷新一次股市
 setInterval(getMarketPrice, 1000);
+// JavaScript 切换选项卡
+
+$(".tab-menu li").click(function () {
+  var tabId = $(this).data("tab");
+
+  $(".tab-menu li").removeClass("active");
+  $(this).addClass("active");
+
+  $(".tab-content .tab-pane").removeClass("active");
+  $("#" + tabId).addClass("active");
+});
