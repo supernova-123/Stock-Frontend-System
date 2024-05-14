@@ -1,21 +1,3 @@
-// 加载导航栏
-// window.addEventListener("load", function () {
-//   let nav = document.getElementsByClassName("top-navigator")[0];
-
-//   var loggout = nav.querySelector("li#loggout");
-//   var loggIn = nav.querySelector("li#loggin");
-//   var user_info = nav.querySelector("li#user-info");
-
-//   // 判断用户属于哪种状态：未登录、已登录
-//   var hasLoggIn = sessionStorage.getItem("loggedIn");
-//   if (hasLoggIn !== "true") {
-//     loggIn.style.display = "block";
-//   } else {
-//     loggout.style.display = "block";
-//     user_info.style.display = "block";
-//   }
-// });
-
 // 大盘实时行情
 let data = [];
 let oldData = []; // 昨日（5s前）的数据
@@ -27,11 +9,11 @@ let hasInit = {
 var countDown = 6;
 function getMarketPrice() {
   countDown--;
-  if(countDown === 0){
+  if (countDown === 0) {
     countDown = 5;
   }
   document.getElementById("count-down").textContent = "数据刷新倒计时: " + countDown + " 秒";
-  if(countDown !== 5){
+  if (countDown !== 5) {
     return;
   }
   let xmlhttp = new XMLHttpRequest();
