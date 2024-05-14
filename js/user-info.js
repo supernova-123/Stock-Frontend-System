@@ -26,3 +26,19 @@ window.addEventListener("load", function () {
   // 设置跳转链接，获取交易记录
   document.getElementById("trade-record").href = "../html/my-trade-record.html?username=" + encodeURIComponent(username);
 });
+
+function toggleBalance() {
+  const balanceElement = document.getElementById('balance');
+  const showIcon = document.querySelector('.show-icon');
+  const hideIcon = document.querySelector('.hide-icon');
+
+  if (balanceElement.classList.contains('hidden')) {
+    balanceElement.classList.remove('hidden');
+    showIcon.classList.add('hidden');
+    hideIcon.classList.remove('hidden');
+  } else {
+    balanceElement.classList.add('hidden');
+    showIcon.classList.remove('hidden');
+    hideIcon.classList.add('hidden');
+  }
+}

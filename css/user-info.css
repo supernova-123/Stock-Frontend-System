@@ -1,0 +1,74 @@
+/* 重置默认样式 */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.label {
+  width: 120px;
+  font-weight: bold;
+}
+
+.value {
+  display: inline-block;
+}
+
+.hidden {
+  display: none;
+}
+
+.show-icon {
+  margin-left: 10px;
+  color: #999;
+  cursor: pointer;
+}
+
+.hide-icon {
+  margin-left: 10px;
+  color: #999;
+  cursor: pointer;
+}
+
+.link {
+  color: #0099ff;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: none; /* 取消下划线 */
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .container {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 24px;
+  }
+}

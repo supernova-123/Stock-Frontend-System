@@ -23,6 +23,9 @@ h1 {
 form {
   display: flex;
   flex-direction: column;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 label {
