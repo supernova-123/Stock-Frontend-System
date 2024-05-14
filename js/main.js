@@ -50,7 +50,18 @@ function renderSubTable(type, code) {
     if (data[i].Code[0] !== code) continue;
     subData.push(data[i]);
     subData[subData.length - 1]["Daily_Percentage_Change"] = oldData.hasOwnProperty(i) ? (((data[i].Price - oldData[i].Price) / oldData[i].Price) * 100).toFixed(2) + "%" : "-";
-    subData[subData.length - 1]["Daily_Price_Change"] = oldData.hasOwnProperty(i) ? (data[i].Price - oldData[i].Price).toFixed(2) : "-";
+    var dailyPercentageChange = oldData.hasOwnProperty(i) ? (data[i].Price - oldData[i].Price).toFixed(2) : "-";
+    // 通过上涨还是下跌决定使用的标志：上箭头和下箭头，同时修改当日涨跌价的数字颜色，同时涨价时数字前加上一个加号
+    if (dailyPercentageChange !== "-" && parseFloat(dailyPercentageChange) >= 0) {
+      subData[subData.length - 1]["Name"] = "<img src='../images/red_up.svg' alt='SVG Image' width='14'>" + subData[subData.length - 1]["Name"];
+      dailyPercentageChange = "+" + dailyPercentageChange;
+      dailyPercentageChange = "<div style='color: red;'>" + dailyPercentageChange + "</div>";
+    }
+    else if (dailyPercentageChange !== "-") {
+      subData[subData.length - 1]["Name"] = "<img src='../images/green_down.svg' alt='SVG Image' width='14'>" + subData[subData.length - 1]["Name"];
+      dailyPercentageChange = "<div style='color: green;'>" + dailyPercentageChange + "</div>";
+    }
+    subData[subData.length - 1]["Daily_Price_Change"] = dailyPercentageChange;
     subData[subData.length - 1]["Stock_Url"] = "../html/single-stock.html?code=" + encodeURIComponent(data[i].Code) + "&name=" + encodeURIComponent(data[i].Name);
     subData[subData.length - 1]["Trade_Url"] = "../html/trade.html?code=" + encodeURIComponent(data[i].Code) + "&name=" + encodeURIComponent(data[i].Name);
   }
@@ -90,10 +101,18 @@ function setMarketDatatable(data, tableId) {
       data: data,
       columns: [
         { title: "股票代码", data: "Code" },
-        { title: "股票名称", data: "Name" },
+        {
+          title: "股票名称", data: "Name", render: function (data, type, row, meta) {
+            return data;
+          }
+        },
         { title: "当前价格", data: "Price" },
         { title: "当日涨跌幅", data: "Daily_Percentage_Change" },
-        { title: "当日涨跌价", data: "Daily_Price_Change" },
+        {
+          title: "当日涨跌价", data: "Daily_Price_Change", render: function (data, type, row, meta) {
+            return data;
+          }
+        },
         {
           title: "个股走势", data: "Stock_Url", render: function (data, type, row, meta) {
             return "<a href='" + data + "'>" + "<img src='../images/stock.svg' alt='SVG Image' width='30'>" + "</a>";
@@ -112,7 +131,11 @@ function setMarketDatatable(data, tableId) {
     hasInit[tableId] = true;
   } else {
     var table = $(`#${tableId}`).DataTable();
-    // 更新时仅修改价格、涨跌幅、涨跌价
+    // 更新时仅修改名称、价格、涨跌幅、涨跌价
+    // 改名
+    for (var i = 0; i < data.length; i++) {
+      table.cell(i, 1).data(data[i]["Name"]).draw();
+    }
     for (var j = 2; j < 5; j++) {
       var colName;
       if (j === 2) {

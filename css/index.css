@@ -79,11 +79,6 @@ th {
   box-sizing: border-box;
 }
 
-#main-table {
-  width: 100% !important;
-  box-sizing: border-box;
-}
-
 /* 响应式样式 */
 @media (max-width: 600px) {
   h1 {
