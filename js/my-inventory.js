@@ -79,7 +79,7 @@ function initInventoryDatatable(data){
         "sInfoPostFix": "",
         "sSearch": "搜索:",
         "sUrl": "",
-        "sEmptyTable": "表中数据为空",
+        "sEmptyTable": "暂无持仓记录",
         "sLoadingRecords": "载入中...",
         "sInfoThousands": ",",
         "oPaginate": {
