@@ -49,7 +49,12 @@ button[type="submit"]:hover {
   background-color: #45a049;
 }
 
-div {
+#tip {
+  margin-top: 10px;
+  text-align: center;
+}
+
+#error {
   margin-bottom: 10px;
   text-align: center;
 }

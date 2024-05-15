@@ -26,7 +26,7 @@ document
         if (data === true) {
           window.location.href = "../html/operation-success.html?type=register";
         } else {
-          document.getElementById("error").textContent = "注册失败，请检查用户名是否重复";
+          document.getElementById("error").textContent = "注册失败，用户已存在或出现其他错误";
         }
       })
       .catch((error) => {
