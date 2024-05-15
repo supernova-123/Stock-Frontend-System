@@ -52,3 +52,8 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #45a049;
 }
+
+div {
+  margin-bottom: 10px;
+  text-align: center;
+}

@@ -73,25 +73,25 @@ document
         // 错误 = 0, 委托成功 = 1, 交易成功 = 2, 废单 = 3, 账户余额不足 = 4, 持仓数量不足 = 5
         switch (data) {
           case 0:
-            alert("交易出现了错误，请检查用户或股票是否存在");
+            document.getElementById("error").textContent = "交易出现了错误，请检查用户或股票是否存在";
             break;
           case 1:
-            alert("委托成功，相关信息请在交易记录查看");
+            window.location.href = "../html/operation-success.html?type=delegate";
             break;
           case 2:
-            alert("交易成功，相关信息请在交易记录及持仓列表查看");
+            window.location.href = "../html/operation-success.html?type=trade";
             break;
           case 3:
-            alert("提交了废单");
+            document.getElementById("error").textContent = "提交了废单";
             break;
           case 4:
-            alert("账户余额不足");
+            document.getElementById("error").textContent = "账户余额不足";
             break;
           case 5:
-            alert("持仓余额不足");
+            document.getElementById("error").textContent = "持仓余额不足";
             break;
         }
-        window.location.href = document.referrer;
+        // window.location.href = document.referrer;
       })
       .catch((error) => {
         console.error(error);

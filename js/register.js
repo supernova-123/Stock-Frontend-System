@@ -8,7 +8,7 @@ document
     var password = document.getElementById("password").value;
     var confirmPassword = document.getElementById("confirmPassword").value;
     if (password !== confirmPassword) {
-      alert("前后输入的密码不一致，请检查您的密码");
+      document.getElementById("error").textContent = "前后输入的密码不一致，请检查您的密码";
       return;
     }
     // 构建请求url
@@ -24,14 +24,13 @@ document
       .then((data) => {
         // 处理返回的结果
         if (data === true) {
-          alert("注册成功！");
-          window.location.href = "../html/login.html";
+          window.location.href = "../html/operation-success.html?type=register";
         } else {
-          alert("注册失败");
+          document.getElementById("error").textContent = "注册失败，请检查用户名是否重复";
         }
       })
       .catch((error) => {
         console.error(error);
-        alert("注册期间出现了错误。");
+        document.getElementById("error").textContent = "注册期间出现了错误，请稍候重试";
       });
   });

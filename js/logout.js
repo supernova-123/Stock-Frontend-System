@@ -13,15 +13,16 @@ function doLoggout() {
       if (data === true) {
         sessionStorage.setItem("loggedIn", false);
         sessionStorage.setItem("username", false);
-        alert("您已成功退出登录");
+        window.location.href = "../html/operation-success.html?type=logout";
       } else {
         alert("退出登录失败");
+        window.location.href = "../html/index.html";
       }
-      window.location.href = "../html/index.html";
     })
     .catch((error) => {
       console.error(error);
       alert("退出登录时出现了错误");
     });
 }
-window.addEventListener("load", doLoggout);
+// window.addEventListener("load", doLoggout);
+doLoggout();

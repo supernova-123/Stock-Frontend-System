@@ -132,7 +132,6 @@ function setMarketDatatable(data, tableId) {
   } else {
     var table = $(`#${tableId}`).DataTable();
     // 更新时仅修改名称、价格、涨跌幅、涨跌价
-    // 改名
     for (var i = 0; i < data.length; i++) {
       table.cell(i, 1).data(data[i]["Name"]).draw();
     }

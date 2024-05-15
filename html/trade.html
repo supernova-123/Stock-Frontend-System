@@ -6,7 +6,7 @@
     <title></title>
     <script type="module" src="../js/utils/check-loggin.js"></script>
     <script src="../js/utils/stock-market.js"></script>
-    <link rel="stylesheet" href="../css/trade.css">
+    <link rel="stylesheet" href="../css/trade.css" />
   </head>
   <body>
     <nav class="top-navigator"></nav>
@@ -23,6 +23,7 @@
       </select>
       <input type="text" id="price" placeholder="挂单价格" required />
       <input type="text" id="amount" placeholder="挂单数量" required />
+      <div id="error" style="color: red;"></div>
       <button type="submit">提交</button>
       <script src="../js/utils/add-navbar.js"></script>
       <script src="../js/trade.js"></script>

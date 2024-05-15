@@ -31,16 +31,15 @@ document
       .then((data) => {
         // 处理返回的结果
         if (data === true) {
-          alert("登录成功！");
           sessionStorage.setItem("loggedIn", true);
           sessionStorage.setItem("username", username);
-          window.location.href = "../html/index.html";
+          window.location.href = "../html/operation-success.html?type=loggin";
         } else {
-          alert("登录失败");
+          document.getElementById("error").textContent = "登录失败，请检查所输入用户名和密码";
         }
       })
       .catch((error) => {
         console.error(error);
-        alert("登录期间出现了错误。");
+        document.getElementById("error").textContent = "登录期间出现了错误，请稍后重试";
       });
   });

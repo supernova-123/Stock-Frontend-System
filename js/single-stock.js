@@ -105,7 +105,7 @@ function drawStockCurve() {
     },
     series: [
       {
-        type: "spline",
+        type: "line",
         name: "价格",
         data: priceHistory,
         tooltip: {
