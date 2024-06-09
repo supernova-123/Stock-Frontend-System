@@ -1,21 +1,4 @@
 // url: single-stock.html?code=xxx&name=yyy
-// 加载导航栏
-window.addEventListener("load", function () {
-  let nav = document.getElementsByClassName("top-navigator")[0];
-
-  var loggout = nav.querySelector("li#loggout");
-  var loggIn = nav.querySelector("li#loggin");
-  var user_info = nav.querySelector("li#user-info");
-
-  // 判断用户属于哪种状态：未登录、已登录
-  var hasLoggIn = sessionStorage.getItem("loggedIn");
-  if (hasLoggIn !== "true") {
-    loggIn.style.display = "block";
-  } else {
-    loggout.style.display = "block";
-    user_info.style.display = "block";
-  }
-});
 // 获取查询参数的键值对
 const queryUrl = window.location.href;
 const queryString = queryUrl.substring(queryUrl.indexOf("?") + 1);
